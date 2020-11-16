@@ -5,7 +5,7 @@
       <header class="filter-products">
         <div class="container flex">
           <div class="filter-products__description">
-            <h1 class="mb-10">All Products</h1>
+            <h1 class="mb-30">All Products</h1>
             <p>A 360° look at Lumin</p>
           </div>
           <div class="filter-products__input">
@@ -97,7 +97,7 @@ export default {
 }
 
 .filter-products__description > h1 {
-  font-family: 'freight-display-pro', serif;
+  font-family: 'Playfair Display', serif;
   font-weight: 400;
   font-size: 1.7em;
   line-height: 1.25em;
@@ -116,15 +116,15 @@ export default {
 }
 
 .filter > select {
-  padding: .3em 2em .3em .7em;
+  padding: .3em 2em .3em 1.7em;
   border: 1px solid #cdd1ce;
-  color: #2b2e2b;
+  color: #4B5548;
   appearance: none;
   cursor: pointer;
-  background-color: var(--white-color);
+  background-color: transparent;
   height: 57px;
   width: 100%;
-  font-size: 16px;
+  font-size: 13px;
 }
 
 .filter > select:focus {
@@ -184,7 +184,7 @@ export default {
 
 @media (min-width: 768px) {
   .filter-products > div {
-    padding: 1em 2.7em 1em 2.5em;
+    padding: 1em 5em;
   }
 
   .filter-products__description > h1 {
@@ -202,7 +202,7 @@ export default {
 
 @media (min-width: 992px) {
   .filter-products > div {
-    padding: 1em 2.7em 1em 3.2em;
+    padding: 1em 6em;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -213,7 +213,7 @@ export default {
   }
 
   .filter-products__input {
-    max-width: 400px;
+    max-width: 350px;
     margin-top: unset;
   }
 

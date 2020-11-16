@@ -1,5 +1,5 @@
 <template>
-  <div v-if="openCartList" class="cart">
+  <div v-if="openCartList" class="cart animateBody">
     <div class="overlay"></div>
     <div class="cart__body">
       <div class="cart__body_header mb-20 px-1">
@@ -44,30 +44,39 @@
           </span>
         </label>
       </div>
-      <div class="cart__cards grid px-1">
-        <div 
-          v-for="item in cart"
-          :key="item.id" 
-          class="cart__cards-item relative flex"
-        >
-          <span class="remove-item" @click.prevent="deleteItemFromCart(item)">X</span>
-          <div class="products__description grid">
-            <h3>{{ item.title }}</h3>
-            <div class="flex flex-v-center flex-h-bet">
-              <div class="counter flex flex-v-center">
-                <button type="button" @click.prevent="removeItem(item)"> - </button>
-                <input v-model="item.qty" type="text" disabled />
-                <button type="button" @click.prevent="addItem(item)"> + </button>
+      <p 
+        v-if="cart.length === 0 
+        || cart.length === undefined" 
+        class="text-center"
+      >
+        There are no items in your cart.
+      </p>
+      <div class="px-1">
+        <div class="cart__cards grid">
+          <div 
+            v-for="item in cart"
+            :key="item.id" 
+            class="cart__cards-item relative flex"
+          >
+            <span class="remove-item" @click.prevent="deleteItemFromCart(item)">&#215;</span>
+            <div class="products__description grid">
+              <h3 class="no-bold">{{ item.title }}</h3>
+              <div class="flex flex-v-center flex-h-bet">
+                <div class="counter flex flex-v-center">
+                  <button type="button" @click.prevent="removeItem(item)"> - </button>
+                  <input v-model="item.qty" type="text" disabled />
+                  <button type="button" @click.prevent="addItem(item)"> + </button>
+                </div>
+                <p>{{ item.price * item.qty }}</p>
               </div>
-              <p>{{ item.price * item.qty }}</p>
             </div>
-          </div>
-          <div class="product__image">
-            <img src="@/assets/images/image-1.webp" alt="Product image" />
+            <div class="product__image">
+              <img src="@/assets/images/image-1.webp" alt="Product image" />
+            </div>
           </div>
         </div>
       </div>
-      <div class="cart__totals full-height px-1">
+      <div v-if="cart.length !== 0" class="cart__totals px-1">
         <div class="flex flex-v-center flex-h-bet">
           <p>Subtotal</p>
           <h3>{{ total }}</h3>
@@ -85,11 +94,6 @@ import { mapState, mapMutations } from 'vuex';
 export default {
   apollo: {
     currency
-  },
-  data() {
-    return {
-      count: 0
-    }
   },
   computed: {
     ...mapState([
@@ -130,6 +134,7 @@ export default {
   top: 0;
   bottom: 0;
   z-index: 90;
+  opacity: 1;
 }
 
 .cart__body {
@@ -141,6 +146,8 @@ export default {
   width: 100%;
   z-index: 200;
   right: 0;
+  display: grid;
+  grid-template-rows: 120px 1.5fr 1fr;
 }
 
 .cart__body_header button {
@@ -200,8 +207,10 @@ export default {
 .remove-item {
   position: absolute;
   right: 10px;
-  top: 10px;
+  top: 3px;
   cursor: pointer;
+  font-size: 25px;
+  font-weight: bold;
 }
 
 .products__description {

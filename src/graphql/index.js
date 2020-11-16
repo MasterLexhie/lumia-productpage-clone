@@ -7,7 +7,7 @@ const products = gql`
       id,
       title,
       image_url,
-      price(currency: NGN)
+      price(currency: USD)
     }
   }
 `;

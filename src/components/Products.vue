@@ -9,9 +9,9 @@
         >
           <a href="#" class="flex flex-col flex-v-center mb-10">
             <img :src="item.image_url" alt="" />
-            <p class="">{{ item.title }}</p>
+            <p class="mt-20 text-center">{{ item.title }}</p>
           </a>
-          <p class="mb-20">{{ `From: ${item.price}` }}</p>
+          <p class="mb-20 text-center">From {{ item.price }}</p>
           <button @click.prevent="addToCart(item)">Add to Cart</button>
         </div>
       </div>
@@ -22,13 +22,9 @@
 import { mapMutations } from 'vuex';
 import { products } from "../graphql";
 
-
 export default {
   apollo: {
     products
-  },
-  computed: {
-    // ...mapState(['allProducts'])
   },
   methods: {
     ...mapMutations(['openCart']),
@@ -46,6 +42,8 @@ section {
 
 .products {
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  padding: 3rem 0;
+  grid-gap: 1em;
 }
 
 .products__item {
@@ -54,11 +52,21 @@ section {
 
 .products__item p {
   line-height: 1.5;
+  font-size: 16px;
+}
+
+.products__item > a {
+  flex: auto;
+}
+
+.products__item > a > p {
+  color: #2B2E2B;
 }
 
 .products__item img {
+  max-width: 150px;
   object-fit: contain;
-  max-height: 190px;
+  height: 190px;
 }
 
 .products__item > div p {
