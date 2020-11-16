@@ -20,6 +20,7 @@
           aria-label="Select language"
         >
           <select 
+            v-model="currencyValue"
             id="currency" 
             name="currency" 
             class="currency"
@@ -67,7 +68,7 @@
                   <input v-model="item.qty" type="text" disabled />
                   <button type="button" @click.prevent="addItem(item)"> + </button>
                 </div>
-                <p>{{ item.price * item.qty }}</p>
+                <p>{{`${currencyValue} ${ item.price * item.qty }`}}</p>
               </div>
             </div>
             <div class="product__image">
@@ -79,7 +80,7 @@
       <div v-if="cart.length !== 0" class="cart__totals px-1">
         <div class="flex flex-v-center flex-h-bet">
           <p>Subtotal</p>
-          <h3>{{ total }}</h3>
+          <h3>{{`${currencyValue} ${total} `}}</h3>
         </div>
         <button class="full-width" type="button">REVERT TO ONE TIME PURCHASE</button>
         <button class="full-width" type="button">PROCEED TO CHECKOUT</button>
@@ -93,7 +94,12 @@ import { mapState, mapMutations } from 'vuex';
 
 export default {
   apollo: {
-    currency
+    currency,
+  },
+  data() {
+    return {
+      currencyValue: 'NGN'
+    }
   },
   computed: {
     ...mapState([
@@ -112,7 +118,7 @@ export default {
       'addItem',
       'removeItem',
       'deleteItemFromCart'
-    ])
+    ]),
   }
 }
 </script>
