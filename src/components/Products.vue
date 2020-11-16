@@ -11,7 +11,7 @@
             <img :src="item.image_url" alt="" />
             <p class="mt-20 text-center">{{ item.title }}</p>
           </a>
-          <p class="mb-20 text-center">From {{ item.price }}</p>
+          <p class="mb-20 text-center">From {{ `${ping}${item.price}` }}</p>
           <button @click.prevent="addToCart(item)">Add to Cart</button>
         </div>
       </div>
@@ -24,7 +24,19 @@ import { products } from "../graphql";
 
 export default {
   apollo: {
-    products
+    products: {
+      query: products,
+      variables() {
+        return {
+          currency: this.ping
+        }
+      }
+    }
+  },
+  data() {
+    return {
+      ping: 'NGN'
+    }
   },
   methods: {
     ...mapMutations(['openCart']),
