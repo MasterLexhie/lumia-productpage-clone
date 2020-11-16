@@ -1,0 +1,141 @@
+:root {
+  --primary-color-light: hsl(60, 5%, 96%);
+  --primary-color-dark: hsl(135, 7%, 89%);
+  --white-color: hsl(0, 0%, 100%);
+  --black-color: hsl(0, 0%, 0%);
+  --secondary-color-dark: hsl(105, 8%, 31%);
+}
+
+body,
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  word-break: break-word;
+}
+
+body {
+  background-color: var(--primary-color-light);
+  font-family: 'FF Bau Regular', san-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.hideOverflowY {
+  overflow-y: hidden;
+}
+.container {
+  max-width: 1300px;
+  padding: 0 1rem;
+  margin: 0 auto;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: currentColor;
+  line-height: 22px;
+  font-size: 1em;
+}
+
+ul {
+  list-style-type: none;
+}
+
+button {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.grid {
+  display: grid;
+}
+
+.flex-h-center {
+  justify-content: center;
+}
+
+.flex-h-bet {
+  justify-content: space-between;
+}
+
+.flex-h-around {
+  justify-content: space-around;
+}
+
+.flex-v-center {
+  align-items: center;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.relative {
+  position: relative;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.mt-30 {
+  margin-top: 30px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.mb-30 {
+  margin-bottom: 30px;
+}
+
+.mr-10 {
+  margin-right: 10px;
+}
+
+.mr-20 {
+  margin-right: 20px;
+}
+
+.pt-10 {
+  padding-top: 10px;
+}
+
+.pt-20 {
+  padding-top: 20px;
+}
+
+.pb-20 {
+  padding-bottom: 20px;
+}
+
+.px-1 {
+  padding: 0 1.5em;
+}
