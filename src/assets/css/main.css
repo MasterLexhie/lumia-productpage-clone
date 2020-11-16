@@ -1,5 +1,5 @@
 :root {
-  --primary-color-light: hsl(60, 5%, 96%);
+  --primary-color-light: hsl(60, 33%, 98%);
   --primary-color-dark: hsl(135, 7%, 89%);
   --white-color: hsl(0, 0%, 100%);
   --black-color: hsl(0, 0%, 0%);
@@ -12,6 +12,7 @@ body,
   padding: 0;
   box-sizing: border-box;
   word-break: break-word;
+  outline: none;
 }
 
 body {

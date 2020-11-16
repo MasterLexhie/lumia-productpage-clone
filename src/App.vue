@@ -29,6 +29,7 @@
         </div>
       </header>
       <Products />
+      <Cart />
       <section id="man-care-movement">
         <div class="container">
           <div class="man-care-movement__title flex flex-v-center flex-h-center">
@@ -61,7 +62,6 @@
       </section>
     </main>
     <Footer />
-    <Cart />
   </div>
 </template>
 <script>
@@ -70,6 +70,8 @@ import Products from "./components/Products";
 import Footer from "./components/Footer";
 import Cart from "./components/Cart";
 
+
+
 export default {
   name: 'App',
   components: {
@@ -77,6 +79,9 @@ export default {
     Products,
     Footer,
     Cart
+  },
+  methods: {
+
   }
 }
 </script>

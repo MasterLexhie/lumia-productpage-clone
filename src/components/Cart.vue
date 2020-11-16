@@ -4,7 +4,7 @@
     <div class="cart__body">
       <div class="cart__body_header mb-20 px-1">
         <div class="relative flex flex-v-center pt-20 pb-20">
-          <button type="button">
+          <button type="button" @click.prevent="openCart">
             <svg 
               viewBox="0 0 256 512" 
               focusable="false" 
@@ -21,9 +21,16 @@
         >
           <select 
             id="currency" 
-            name="currency" class="currency"
+            name="currency" 
+            class="currency"
           >
-            <option value="en">EN</option>
+            <option 
+              v-for="(item, index) in currency" 
+              :key="index" 
+              :value="item"
+            >
+              {{ item }}
+            </option>
           </select>
           <span>
             <svg 
@@ -38,51 +45,21 @@
         </label>
       </div>
       <div class="cart__cards grid px-1">
-        <div class="cart__cards-item relative flex">
-          <span class="remove-item">X</span>
+        <div 
+          v-for="item in cart"
+          :key="item.id" 
+          class="cart__cards-item relative flex"
+        >
+          <span class="remove-item" @click.prevent="deleteItemFromCart(item)">X</span>
           <div class="products__description grid">
-            <h3>Age Management Set</h3>
+            <h3>{{ item.title }}</h3>
             <div class="flex flex-v-center flex-h-bet">
               <div class="counter flex flex-v-center">
-                <button type="button" @click.prevent="decrease"> - </button>
-                <input v-model="count" type="text" disabled />
-                <button type="button" @click.prevent="increase"> + </button>
+                <button type="button" @click.prevent="removeItem(item)"> - </button>
+                <input v-model="item.qty" type="text" disabled />
+                <button type="button" @click.prevent="addItem(item)"> + </button>
               </div>
-              <p>$52.00</p>
-            </div>
-          </div>
-          <div class="product__image">
-            <img src="@/assets/images/image-1.webp" alt="Product image" />
-          </div>
-        </div>
-        <div class="cart__cards-item relative flex">
-          <span class="remove-item">X</span>
-          <div class="products__description grid">
-            <h3>Age Management Set</h3>
-            <div class="flex flex-v-center flex-h-bet">
-              <div class="counter flex flex-v-center">
-                <button type="button" @click.prevent="decrease"> - </button>
-                <input v-model="count" type="text" disabled />
-                <button type="button" @click.prevent="increase"> + </button>
-              </div>
-              <p>$52.00</p>
-            </div>
-          </div>
-          <div class="product__image">
-            <img src="@/assets/images/image-1.webp" alt="Product image" />
-          </div>
-        </div>
-        <div class="cart__cards-item relative flex">
-          <span class="remove-item">X</span>
-          <div class="products__description grid">
-            <h3>Age Management Set</h3>
-            <div class="flex flex-v-center flex-h-bet">
-              <div class="counter flex flex-v-center">
-                <button type="button" @click.prevent="decrease"> - </button>
-                <input v-model="count" type="text" disabled />
-                <button type="button" @click.prevent="increase"> + </button>
-              </div>
-              <p>$52.00</p>
+              <p>{{ item.price * item.qty }}</p>
             </div>
           </div>
           <div class="product__image">
@@ -93,7 +70,7 @@
       <div class="cart__totals full-height px-1">
         <div class="flex flex-v-center flex-h-bet">
           <p>Subtotal</p>
-          <h3>$52.00</h3>
+          <h3>{{ total }}</h3>
         </div>
         <button class="full-width" type="button">REVERT TO ONE TIME PURCHASE</button>
         <button class="full-width" type="button">PROCEED TO CHECKOUT</button>
@@ -102,26 +79,36 @@
   </div>
 </template>
 <script>
+import { currency } from '../graphql';
+import { mapState, mapMutations } from 'vuex';
+
 export default {
+  apollo: {
+    currency
+  },
   data() {
     return {
-      count: 0,
-      openCartList: false
+      count: 0
     }
   },
-  mounted() {
-    // this.overflowHidden()
+  computed: {
+    ...mapState([
+      'openCartList',
+      'cart'
+    ]),
+    total () {
+      return Object.values(this.cart)
+        .reduce((acc, el) => acc + el.qty * el.price, 0)
+        .toFixed(2)
+    }
   },
   methods: {
-    overflowHidden() {
-      document.body.classList.add('hideOverflowY')
-    },
-    increase() {
-      this.count >= 0 ? this.count++ : 0;
-    },
-    decrease() {
-      this.count > 0 ? this.count-- : this.count;
-    }
+    ...mapMutations([
+      'openCart',
+      'addItem',
+      'removeItem',
+      'deleteItemFromCart'
+    ])
   }
 }
 </script>

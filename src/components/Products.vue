@@ -12,18 +12,30 @@
             <p class="">{{ item.title }}</p>
           </a>
           <p class="mb-20">{{ `From: ${item.price}` }}</p>
-          <button>Add to Cart</button>
+          <button @click.prevent="addToCart(item)">Add to Cart</button>
         </div>
       </div>
     </div>
   </section>
 </template>
 <script>
+import { mapMutations } from 'vuex';
 import { products } from "../graphql";
+
 
 export default {
   apollo: {
     products
+  },
+  computed: {
+    // ...mapState(['allProducts'])
+  },
+  methods: {
+    ...mapMutations(['openCart']),
+    addToCart(item) {
+      this.$store.commit('addItem', item)
+      this.openCart()
+    }
   }
 }
 </script>
