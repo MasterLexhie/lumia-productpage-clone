@@ -19,23 +19,14 @@
       <div class="flex flex-v-center">
         <div class="navigation__cart mr-20 flex flex-v-center">
           <a href="#" class="mr-20">Account</a>
-          <button class="navigation__cart-button flex">
+          <button 
+            class="navigation__cart-button flex"
+            @click.prevent="openCart"
+          >
             <img src="../assets/images/cart.png" alt="">
-            <span>{{0}}</span>
+            <span>{{ cart.length }}</span>
           </button>
         </div>
-        <label 
-          for="language" 
-          class="flex"
-          aria-label="Select language"
-        >
-          <select 
-            id="language" 
-            name="language" class="navigation__lang-select"
-          >
-            <option value="en">EN</option>
-          </select>
-        </label>
       </div>
     </div>
     <div v-if="openMobileMenu" class="mobile-menu">
@@ -112,6 +103,8 @@
   </div>
 </template>
 <script>
+import { mapState, mapMutations } from 'vuex';
+
 export default {
   data() {
     return {
@@ -127,7 +120,11 @@ export default {
       : document.body.classList.remove('hideOverflowY')
     }
   },
+  computed: {
+    ...mapState(['cart'])
+  },
   methods: {
+    ...mapMutations(['openCart']),
     showShopMenu(){
       if (this.shop === false) {
         this.shop = true;
@@ -192,15 +189,6 @@ export default {
   right: -2px;
   top: 0;
   font-size: 1em;
-}
-
-.navigation__lang-select {
-  padding: .3em 2em .3em .7em;
-  border: 1px solid #acafad;
-  color: #2b2e2b;
-  appearance: none;
-  cursor: pointer;
-  background-color: transparent;
 }
 
 .overlay {
