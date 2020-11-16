@@ -1,5 +1,5 @@
 <template>
-  <div class="navigation">
+  <div :class="{ scroll: active }" class="navigation">
     <div class="container flex flex-v-center flex-h-bet full-height">
       <div class="navigation__logo">
         <img src="../assets/images/logo.png" alt="Lumin Skincare">
@@ -29,7 +29,7 @@
         </div>
       </div>
     </div>
-    <div v-if="openMobileMenu" class="mobile-menu">
+    <div v-if="openMobileMenu" class="mobile-menu animateBody">
       <div class="overlay"></div>
       <div class="menu__body">
         <div class="menu__header">
@@ -110,7 +110,8 @@ export default {
     return {
       openMobileMenu: false,
       shop: true,
-      help: false
+      help: false,
+      active: false
     }
   },
   watch: {
@@ -123,8 +124,21 @@ export default {
   computed: {
     ...mapState(['cart'])
   },
+  mounted() {
+    // window.addEventListener('scroll', this.scrollNav())
+  },
   methods: {
     ...mapMutations(['openCart']),
+    scrollNav() {
+      if (window.pageYOffset > 100) {
+        console.log('high')
+        this.active = true
+      }
+
+      if (window.pageYOffset < 50) {
+        this.active = true
+      }
+    },
     showShopMenu(){
       if (this.shop === false) {
         this.shop = true;
@@ -209,6 +223,20 @@ export default {
   top: 0;
   bottom: 0;
   z-index: 90;
+  opacity: 1;
+}
+
+.animateBody {
+  animation: navigation .3s ease-out;
+}
+
+@keyframes navigation {
+  0% { 
+    opacity: 0;
+  }
+  100% { 
+    opacity: 1;
+  }
 }
 
 .menu__body {
