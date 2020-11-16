@@ -2,12 +2,12 @@ import gql from "graphql-tag";
 
 
 const products = gql`
-  query {
+  query($currency: Currency!) {
     products {
       id,
       title,
       image_url,
-      price(currency: USD)
+      price(currency: $currency)
     }
   }
 `;
