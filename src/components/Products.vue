@@ -1,13 +1,13 @@
 <template>
   <section>
     <div class="container">
-      <div class="products grid">
+      <div class="products relative grid">
+        <div v-if="!products && $apollo.loading" class="loader"></div>
         <div 
           v-for="item in products"
           :key="item.id"
-          class="products__item relative flex flex-col flex-v-center"
+          class="products__item flex flex-col flex-v-center"
         >
-          <div v-if="!item && $apollo.loading" class="loader"></div>
           <a href="#" class="flex flex-col flex-v-center mb-10">
             <img :src="item.image_url" alt="" />
             <p class="mt-20 text-center">{{ item.title }}</p>

@@ -157,15 +157,15 @@ button {
 }
 
 .loader {
-  position: absolute;
-  top: 8em;
   border: 10px solid transparent;
-  border-top: 10px solid #fff;
-  border-bottom: 10px solid #fff;
+  border-top: 10px solid var(--secondary-color-dark);
+  border-bottom: 10px solid var(--secondary-color-dark);
   border-radius: 50%;
   width: 120px;
   height: 120px;
-  animation: spin 1s linear infinite;
+  grid-column: span 3;
+  justify-self: center;
+  animation: spin .6s linear infinite;
 }
 
 @keyframes spin {
