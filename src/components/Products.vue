@@ -5,13 +5,14 @@
         <div 
           v-for="item in products"
           :key="item.id"
-          class="products__item flex flex-col flex-v-center"
+          class="products__item relative flex flex-col flex-v-center"
         >
+          <div v-if="!item && $apollo.loading" class="loader"></div>
           <a href="#" class="flex flex-col flex-v-center mb-10">
             <img :src="item.image_url" alt="" />
             <p class="mt-20 text-center">{{ item.title }}</p>
           </a>
-          <p class="mb-20 text-center">From {{ `${ping}${item.price}` }}</p>
+          <p class="mb-20 text-center">From {{ `${currencyValue} ${item.price}` }}</p>
           <button @click.prevent="addToCart(item)">Add to Cart</button>
         </div>
       </div>
@@ -28,14 +29,14 @@ export default {
       query: products,
       variables() {
         return {
-          currency: this.ping
+          currency: this.currencyValue
         }
       }
     }
   },
   data() {
     return {
-      ping: 'NGN'
+      currencyValue: 'NGN'
     }
   },
   methods: {

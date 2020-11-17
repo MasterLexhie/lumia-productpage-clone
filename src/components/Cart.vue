@@ -141,6 +141,7 @@ export default {
   bottom: 0;
   z-index: 90;
   opacity: 1;
+  transition: opacity .5s;
 }
 
 .cart__body {
@@ -154,6 +155,7 @@ export default {
   right: 0;
   display: grid;
   grid-template-rows: 120px 1.5fr 1fr;
+  transition: .5s;
 }
 
 .cart__body_header button {
