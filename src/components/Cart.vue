@@ -62,13 +62,13 @@
             <span class="remove-item" @click.prevent="deleteItemFromCart(item)">&#215;</span>
             <div class="products__description grid">
               <h3 class="no-bold">{{ item.title }}</h3>
-              <div class="flex flex-v-center flex-h-bet">
+              <div class="flex flex-h-bet">
+                <p>{{`${currencyValue} ${ item.price * item.qty }`}}</p>
                 <div class="counter flex flex-v-center">
                   <button type="button" @click.prevent="removeItem(item)"> - </button>
                   <input v-model="item.qty" type="text" disabled />
                   <button type="button" @click.prevent="addItem(item)"> + </button>
                 </div>
-                <p>{{`${currencyValue} ${ item.price * item.qty }`}}</p>
               </div>
             </div>
             <div class="product__image">
@@ -222,15 +222,18 @@ export default {
 .products__description {
   flex: auto;
   padding: 1em 1em 1em 1.5em;
+  grid-gap: 1em;
 }
 
 .products__description > div {
   align-self: end;
+  flex-direction: column;
 }
 
 .products__description > div p {
   font-size: 1.1em;
   letter-spacing: .03px;
+  margin-bottom: 1em;
 }
 
 .counter {
@@ -296,5 +299,17 @@ export default {
   background-color: #4b5548;
   border: none;
   margin-top: 15px;
+}
+
+@media (min-width: 465px) {
+  .products__description > div {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .products__description > div p{
+    order: 1;
+    margin-bottom: 0;
+  }
 }
 </style>
