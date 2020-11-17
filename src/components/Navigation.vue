@@ -226,19 +226,6 @@ export default {
   opacity: 1;
 }
 
-.animateBody {
-  animation: navigation .3s ease-out;
-}
-
-@keyframes navigation {
-  0% { 
-    opacity: 0;
-  }
-  100% { 
-    opacity: 1;
-  }
-}
-
 .menu__body {
   background: #f2f2ef;
   position: fixed;
