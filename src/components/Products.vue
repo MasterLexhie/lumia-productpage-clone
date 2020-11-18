@@ -2,9 +2,9 @@
   <section>
     <div class="container">
       <div class="products relative grid">
-        <div v-if="!products && $apollo.loading" class="loader"></div>
+        <div v-if="allProducts && $apollo.loading" class="loader"></div>
         <div 
-          v-for="item in products"
+          v-for="item in allProducts"
           :key="item.id"
           class="products__item flex flex-col flex-v-center"
         >
@@ -20,7 +20,7 @@
   </section>
 </template>
 <script>
-import { mapMutations } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import { products } from "../graphql";
 
 export default {
@@ -31,22 +31,17 @@ export default {
         return {
           currency: this.currencyValue
         }
-      }
-      // update: data => data.products
+      },
+      result({data}){
+        this.setAllProducts(data.products)
+      },
     }
   },
   computed: {
-    currencyValue: {
-      get() {
-        return this.$store.state.currencyValue;
-      },
-      set(value) {
-        return this.store.state.currencyValue = value;
-      }
-    }
+    ...mapState(['currencyValue', 'allProducts']),
   },
   methods: {
-    ...mapMutations(['openCart']),
+    ...mapMutations(['openCart','setAllProducts']),
     addToCart(item) {
       this.$store.commit('addItem', item)
       this.openCart()
