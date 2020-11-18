@@ -80,7 +80,7 @@
       <div v-if="cart.length !== 0" class="cart__totals px-1">
         <div class="flex flex-v-center flex-h-bet">
           <p>Subtotal</p>
-          <h3>{{`${newCurrencyValue} ${total} `}}</h3>
+          <h3>{{`${currencyValue} ${total} `}}</h3>
         </div>
         <button class="full-width" type="button">REVERT TO ONE TIME PURCHASE</button>
         <button class="full-width" type="button">PROCEED TO CHECKOUT</button>
@@ -94,20 +94,35 @@ import { mapState, mapMutations } from 'vuex';
 
 export default {
   apollo: {
-    currency: {
-      query: currency,
-      result: ({ data } ) => data.currency
-    },
+    currency
   },
   data() {
     return {
-      newCurrencyValue: ''
+      newCurrencyValue: 'USD'
     }
+  },
+  watch: {
+    // newCurrencyValue: function (value) {
+    //   if (this.cart.length !== 0 && value) {
+    //     this.cart.map( cartItem => { 
+    //       this.allProducts.find( product => {
+    //         if( product.id === cartItem.id ) {
+    //           // const newPrice = product.price;
+    //           // const newCartPrice = { ...cartItem, price: newPrice }
+              
+    //           console.log('newCartPrice', product);
+    //         }
+    //       })
+    //     })
+    //   }
+    // }
   },
   computed: {
     ...mapState([
       'openCartList',
-      'cart'
+      'currencyValue',
+      'cart',
+      'allProducts'
     ]),
     total () {
       return Object.values(this.cart)

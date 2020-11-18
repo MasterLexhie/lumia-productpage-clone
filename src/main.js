@@ -11,12 +11,16 @@ Vue.config.productionTip = false
 const store = new Vuex.Store({
   state: {
     cart: [],
+    allProducts:[],
     openCartList: false,
     currencyValue: 'USD'
   },
   mutations: {
     setCurrencyValue(state, value) {
       return state.currencyValue = value
+    },
+    setAllProducts(state, value) {
+      return state.allProducts = value
     },
     openCart(state) {
       state.openCartList === false 
