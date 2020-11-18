@@ -32,11 +32,17 @@ export default {
           currency: this.currencyValue
         }
       }
+      // update: data => data.products
     }
   },
-  data() {
-    return {
-      currencyValue: 'NGN'
+  computed: {
+    currencyValue: {
+      get() {
+        return this.$store.state.currencyValue;
+      },
+      set(value) {
+        return this.store.state.currencyValue = value;
+      }
     }
   },
   methods: {

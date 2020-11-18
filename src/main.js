@@ -11,9 +11,13 @@ Vue.config.productionTip = false
 const store = new Vuex.Store({
   state: {
     cart: [],
-    openCartList: false
+    openCartList: false,
+    currencyValue: 'USD'
   },
   mutations: {
+    setCurrencyValue(state, value) {
+      return state.currencyValue = value
+    },
     openCart(state) {
       state.openCartList === false 
       ? (
@@ -38,7 +42,7 @@ const store = new Vuex.Store({
       ? state.cart.push(product)
       : productInCart
       ? productInCart.qty = productInCart.qty + 1
-      : ''
+      : null
     },
     removeItem(state, payload) {
       const productInCart = state.cart.find(
@@ -49,12 +53,11 @@ const store = new Vuex.Store({
       ? productInCart.qty = productInCart.qty - 1 
       : productInCart.qty === 1 
       ? state.cart = state.cart.filter(product => product.id !== payload.id) 
-      : '' 
+      : null
     },
     deleteItemFromCart(state, payload) {
       return state.cart = state.cart.filter(product => product.id !== payload.id) 
-    },
-
+    }
   }
 });
 

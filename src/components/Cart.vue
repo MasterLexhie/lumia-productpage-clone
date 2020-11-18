@@ -20,10 +20,11 @@
           aria-label="Select language"
         >
           <select 
-            v-model="currencyValue"
+            v-model="newCurrencyValue"
             id="currency" 
             name="currency" 
             class="currency"
+            @change="setCurrencyValue(newCurrencyValue)"
           >
             <option 
               v-for="(item, index) in currency" 
@@ -46,8 +47,7 @@
         </label>
       </div>
       <p 
-        v-if="cart.length === 0 
-        || cart.length === undefined" 
+        v-if="cart.length === 0 || cart.length === undefined" 
         class="text-center"
       >
         There are no items in your cart.
@@ -80,7 +80,7 @@
       <div v-if="cart.length !== 0" class="cart__totals px-1">
         <div class="flex flex-v-center flex-h-bet">
           <p>Subtotal</p>
-          <h3>{{`${currencyValue} ${total} `}}</h3>
+          <h3>{{`${newCurrencyValue} ${total} `}}</h3>
         </div>
         <button class="full-width" type="button">REVERT TO ONE TIME PURCHASE</button>
         <button class="full-width" type="button">PROCEED TO CHECKOUT</button>
@@ -94,11 +94,14 @@ import { mapState, mapMutations } from 'vuex';
 
 export default {
   apollo: {
-    currency,
+    currency: {
+      query: currency,
+      result: ({ data } ) => data.currency
+    },
   },
   data() {
     return {
-      currencyValue: 'NGN'
+      newCurrencyValue: ''
     }
   },
   computed: {
@@ -117,8 +120,9 @@ export default {
       'openCart',
       'addItem',
       'removeItem',
-      'deleteItemFromCart'
-    ]),
+      'deleteItemFromCart',
+      'setCurrencyValue'
+    ])
   }
 }
 </script>
@@ -204,12 +208,13 @@ export default {
 .cart__cards {
   grid-gap: 1em;
   overflow-y: scroll;
-  max-height: 320px;
-  padding-right: 1em;
+  max-height: 500px;
+  height: 100%;
 }
 
 .cart__cards-item {
   background: #fff;
+  height: 150px;
 }
 
 .remove-item {
