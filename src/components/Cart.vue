@@ -52,10 +52,10 @@
       >
         There are no items in your cart.
       </p>
-      <div class="px-1">
+      <div class="cart__card px-1">
         <div class="cart__cards grid">
           <div 
-            v-for="item in cart"
+            v-for="item in cartList"
             :key="item.id" 
             class="cart__cards-item relative flex"
           >
@@ -63,7 +63,7 @@
             <div class="products__description grid">
               <h3 class="no-bold">{{ item.title }}</h3>
               <div class="flex flex-h-bet">
-                <p>{{`${currencyValue} ${ item.price * item.qty }`}}</p>
+                <p>{{`${currencyValue} ${ (item.price * item.qty).toFixed(2) }`}}</p>
                 <div class="counter flex flex-v-center">
                   <button type="button" @click.prevent="removeItem(item)"> - </button>
                   <input v-model="item.qty" type="text" disabled />
@@ -98,24 +98,20 @@ export default {
   },
   data() {
     return {
-      newCurrencyValue: 'USD'
+      newCurrencyValue: 'USD',
+      cartList: []
     }
   },
   watch: {
-    // newCurrencyValue: function (value) {
-    //   if (this.cart.length !== 0 && value) {
-    //     this.cart.map( cartItem => { 
-    //       this.allProducts.find( product => {
-    //         if( product.id === cartItem.id ) {
-    //           // const newPrice = product.price;
-    //           // const newCartPrice = { ...cartItem, price: newPrice }
-              
-    //           console.log('newCartPrice', product);
-    //         }
-    //       })
-    //     })
-    //   }
-    // }
+    newCurrencyValue: function (value) {
+      if (this.cart.length !== 0 && value) {
+        this.updateCart();
+        // this.setCart(this.cartList);
+      }
+    }
+  },
+  mounted() {
+    this.setCart(this.cartList);
   },
   computed: {
     ...mapState([
@@ -133,10 +129,12 @@ export default {
   methods: {
     ...mapMutations([
       'openCart',
+      'setCurrencyValue',
+      'setCart',
       'addItem',
       'removeItem',
       'deleteItemFromCart',
-      'setCurrencyValue'
+      'updateCart'
     ])
   }
 }
@@ -220,16 +218,19 @@ export default {
   width: 100%;
 }
 
+.cart__card {
+  overflow-y: auto;
+  max-height: 100vh;
+  height: 100%;
+  margin-bottom: 20px;
+}
+
 .cart__cards {
   grid-gap: 1em;
-  overflow-y: scroll;
-  max-height: 500px;
-  height: 100%;
 }
 
 .cart__cards-item {
   background: #fff;
-  height: 150px;
 }
 
 .remove-item {
@@ -238,7 +239,7 @@ export default {
   top: 3px;
   cursor: pointer;
   font-size: 25px;
-  font-weight: bold;
+  font-weight: 400;
 }
 
 .products__description {

@@ -12,7 +12,7 @@
             <img :src="item.image_url" alt="" />
             <p class="mt-20 text-center">{{ item.title }}</p>
           </a>
-          <p class="mb-20 text-center">From {{ `${currencyValue} ${item.price}` }}</p>
+          <p class="mb-20 text-center">From {{ `${currencyValue} ${item.price.toFixed(2)}` }}</p>
           <button @click.prevent="addToCart(item)">Add to Cart</button>
         </div>
       </div>
@@ -34,7 +34,7 @@ export default {
       },
       result({data}){
         this.setAllProducts(data.products)
-      },
+      }
     }
   },
   computed: {
