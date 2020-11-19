@@ -22,6 +22,20 @@ const store = new Vuex.Store({
     setAllProducts(state, value) {
       return state.allProducts = value
     },
+    setCart(state, value) {
+      return state.cart = value
+    },
+    updateCart(state) {
+      const newCart = state.cart.find(cartItem => {
+        state.allProducts.filter(productItem => {
+          cartItem.id === productItem.id 
+          ? {...cartItem, price: productItem.price} 
+          : null
+        })
+
+        console.log('cart', newCart);
+      })
+    },
     openCart(state) {
       state.openCartList === false 
       ? (
