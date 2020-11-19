@@ -55,7 +55,7 @@
       <div class="cart__card px-1">
         <div class="cart__cards grid">
           <div 
-            v-for="item in cartList"
+            v-for="item in cart"
             :key="item.id" 
             class="cart__cards-item relative flex"
           >
@@ -98,20 +98,8 @@ export default {
   },
   data() {
     return {
-      newCurrencyValue: 'USD',
-      cartList: []
+      newCurrencyValue: 'USD'
     }
-  },
-  watch: {
-    newCurrencyValue: function (value) {
-      if (this.cart.length !== 0 && value) {
-        this.updateCart();
-        // this.setCart(this.cartList);
-      }
-    }
-  },
-  mounted() {
-    this.setCart(this.cartList);
   },
   computed: {
     ...mapState([
@@ -130,11 +118,9 @@ export default {
     ...mapMutations([
       'openCart',
       'setCurrencyValue',
-      'setCart',
       'addItem',
       'removeItem',
-      'deleteItemFromCart',
-      'updateCart'
+      'deleteItemFromCart'
     ])
   }
 }

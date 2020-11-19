@@ -25,17 +25,19 @@ const store = new Vuex.Store({
     setCart(state, value) {
       return state.cart = value
     },
-    updateCart(state) {
-      const newCart = state.cart.find(cartItem => {
-        state.allProducts.filter(productItem => {
-          cartItem.id === productItem.id 
-          ? {...cartItem, price: productItem.price} 
-          : null
-        })
-
-        console.log('cart', newCart);
-      })
-    },
+    // updateCart(state, products) {
+    //   // change codes to update prices
+    //   // state.cart.find( cartItem => {
+    //   //   if (cartItem) {
+    //   //     products.filter(productItem => {
+    //   //       if (cartItem.id === productItem.id) {
+    //   //         cartItem.price = productItem.price;
+    //   //         console.log('It works!!', state.cart);
+    //   //       }
+    //   //     })
+    //   //   }
+    //   // })
+    // },
     openCart(state) {
       state.openCartList === false 
       ? (
