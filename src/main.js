@@ -16,28 +16,15 @@ const store = new Vuex.Store({
     currencyValue: 'USD'
   },
   mutations: {
-    setCurrencyValue(state, value) {
-      return state.currencyValue = value
-    },
     setAllProducts(state, value) {
       return state.allProducts = value
     },
     setCart(state, value) {
       return state.cart = value
     },
-    // updateCart(state, products) {
-    //   // change codes to update prices
-    //   // state.cart.find( cartItem => {
-    //   //   if (cartItem) {
-    //   //     products.filter(productItem => {
-    //   //       if (cartItem.id === productItem.id) {
-    //   //         cartItem.price = productItem.price;
-    //   //         console.log('It works!!', state.cart);
-    //   //       }
-    //   //     })
-    //   //   }
-    //   // })
-    // },
+    removeCartItem(state, value) {
+      return state.cart = state.cart.filter(item => item.id !== value.id)
+    },
     openCart(state) {
       state.openCartList === false 
       ? (
@@ -58,8 +45,8 @@ const store = new Vuex.Store({
         product => product.id === payload.id
       )
 
-      state.cart.length === 0 || state.cart === undefined || !productInCart
-      ? state.cart.push(product)
+      !productInCart || state.cart.length === 0 || state.cart === undefined
+      ? state.cart = [...state.cart, product]
       : productInCart
       ? productInCart.qty = productInCart.qty + 1
       : null
