@@ -24,7 +24,6 @@
             id="currency" 
             name="currency" 
             class="currency"
-            @change="setCurrencyValue(newCurrencyValue)"
           >
             <option 
               v-for="(item, index) in currency" 
@@ -47,7 +46,7 @@
         </label>
       </div>
       <p 
-        v-if="cart.length === 0 || cart.length === undefined" 
+        v-if="cart.length === 0 || !cart" 
         class="text-center"
       >
         There are no items in your cart.
@@ -89,16 +88,45 @@
   </div>
 </template>
 <script>
-import { currency } from '../graphql';
+import { currency, products } from '../graphql';
 import { mapState, mapMutations } from 'vuex';
 
 export default {
   apollo: {
-    currency
+    currency,
+    products: {
+      query: products,
+      variables() {
+        return {
+          currency: this.currencyValue
+        }
+      },
+      result({data}) {
+        this.productsArray = data.products
+      }
+    }
   },
-  data() {
+  data: () => {
     return {
-      newCurrencyValue: 'USD'
+      productsArray: []
+    }
+  },
+  watch: {
+    allProducts: {
+      handler(value) {
+        value.map(product => {
+          if(this.cart.length === 0) return false;
+          this.cart.find(cartItem => {
+            const newCartItem = { ...cartItem, price: product.price }
+            product.id === cartItem.id 
+            ? (
+              this.removeCartItem(cartItem), 
+              this.cart.push(newCartItem)
+            )
+            : null
+          })
+        })
+      }
     }
   },
   computed: {
@@ -108,6 +136,14 @@ export default {
       'cart',
       'allProducts'
     ]),
+    newCurrencyValue: {
+      get(){
+        return this.$store.state.currencyValue
+      },
+      set(value){
+        return this.$store.state.currencyValue = value
+      }
+    },
     total () {
       return Object.values(this.cart)
         .reduce((acc, el) => acc + el.qty * el.price, 0)
@@ -117,7 +153,7 @@ export default {
   methods: {
     ...mapMutations([
       'openCart',
-      'setCurrencyValue',
+      'removeCartItem',
       'addItem',
       'removeItem',
       'deleteItemFromCart'
